@@ -1,0 +1,17 @@
+body { background-color: lightblue; }
+
+h1 { padding-left: 10%;	font-family: sans-serif; color: black; text-align: left; padding: 10px; }
+
+h2 { padding-left: 5%; font-family: sans-serif;	color: black; text-align: left; }
+
+p {	font-family: verdana; font-size: 20px; }
+
+img { max-width: 25%; max-height: 15%; float: left; margin-bottom: 10px; overflow: hidden; padding-left: 10%; }
+	
+input { width: 10%;	padding: 2%; }
+
+.text { font-size: 20px; padding-left: 10%; float: left; text-align: left; max-width: 50%; float: left; }
+
+.time { display: flex; align-items: center; }
+
+.tags { display: flex; align-items: center; padding-top: 5%; } 

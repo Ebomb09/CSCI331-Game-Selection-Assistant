@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <link rel="stylesheet" href="../css/viewStyle.css">
+	<h1>{% block title %} {{ g.game['name'] }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+	<div class="text">
+		<p>{{ g.game['description'] }} The beloved, innovative classic; The game is set in Soleanna, the beautiful city of water. In his first adventure set in the human world, Sonic meets a beautiful princess named Elise, whom he quickly befriends, but Princess Elise is abducted by none other than the calculating Dr. Eggman who is working under dark and sinister motives,to destroy this special kingdom of hers. In order to restore safety and serenity, Sonic must maneuver his way through a series of adventures and challenges where he will encounter and interact with a bevy of allies and enemies, and ultimately go head to head against the menacing doctor to thwart his malicious plans. Along the way, Sonic encounters a mysterious character named Silver. Blocking him with unique supernatural powers, even the Blue dude with tude will find it difficult to out-maneuver the enigmatic Silver! As Sonic speeds through the huge kingdom, the mysteries unravel. Sonic The Hedgehog melds top-tier animation production values with next generation art, physics and game design to create the most intense, high velocity Sonic adventure yet! Featuring interactive 3D environments, a large cast of new and returning characters, and a blistering sense of speed, get ready for the reinvention of Sonic The Hedgehog!</p>
+
+		<div class="time">
+			<h2>Time to Beat (Main Story):&ensp;</h2>
+			<p>Playtime: {{ g.game['playtime'] }}</p>
+		</div>
+
+		<div class="tags">
+			<h2>Tags:</h2>
+			<ul>
+				<li>Action {{ g.game['tag'] }}</</li>
+				<li>Adventure {{ g.game['tag'] }}</</li>
+				<li>Platform {{ g.game['tag'] }}</</li>
+			</ul>
+		</div>
+		
+		{% if g.user != None %}
+			<form method="POST">
+				{% if not g.in_collection %}
+					<input type='hidden' name='do' value='add'>
+					<input type='submit' value='Add'>
+				{% else %}
+					<input type='hidden' name='do' value='remove'>
+					<input type='submit' value='Remove'>
+				{% endif %}
+			</form>
+		{% endif %}
+	</div>
+
+	<div class="image">
+		<img src="{{ g.game['image_url'] }" alt="{{ g.game['name'] }'s box art">
+	</div>
+
+</div>
+
+{% endblock %}
