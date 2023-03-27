@@ -26,5 +26,5 @@ input.danger { color: #cc2f2e; }
 input[type=submit] { align-self: start; min-width: 10em; }
 table { width:100%; table-layout: fixed; border-collapse: collapse; }
 tr { text-align: center; }
-th, td { border-bottom: 2px solid lightgrey; }
+th, td { border-bottom: 1px solid lightgrey; }
 tr img { max-width: 100%; }
