@@ -11,7 +11,7 @@ def view():
 
 	if g.user != None:
 		g.collection = db.get_user_games(g.user['id'])
-		return render_template('collection/games.html')
+		return render_template('collection/view.html')
 
 	else:
 		return redirect(url_for("auth.login"))
