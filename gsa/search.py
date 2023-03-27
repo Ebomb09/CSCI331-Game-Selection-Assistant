@@ -13,7 +13,7 @@ def search():
 	g.results = []
 	
 	# Query all games into our database
-	if request.args['q'] != None:
+	if request.args.get('q') != None:
 		results = HowLongToBeat().search(request.args['q'])
 
 		for result in results:
