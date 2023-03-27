@@ -16,9 +16,14 @@
 	{% for item in g.collection %}
 	<tr>
 		<td> <img src="{{ item['image_url'] }}" alt="{{ item['name'] }}"> </td>
-		<td> {{ item['name'] }} </td>
+		<td> <a href="{{ url_for('game.view', gameId=item['gameId']) }}"> {{ item['name'] }} </a> </td>
 		<td> {{ item['playtime'] }} </td>
-		<td> {{ item['completed'] }} </td>
+
+		{% if item['completed'] %}
+		<td> &check; </td>
+		{% else %}
+		<td> &cross; </td>
+		{% endif %}
 	</tr>
 	{% endfor %}
 </table>
