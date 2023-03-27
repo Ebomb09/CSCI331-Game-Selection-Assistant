@@ -8,8 +8,11 @@
 		representing a user’s collection, that they can use to determine 
 		what they wish to play next ">
 
-	<title>{% block title %}{% endblock %} - GameSelectionAssistant</title>
+	<title> {% block title %}{% endblock %} - GameSelectionAssistant </title>
+
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<!-- Additional Styles -->
+	{% block styles %}{% endblock %}
 </head>
 
 <body>
