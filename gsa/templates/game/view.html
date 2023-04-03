@@ -52,7 +52,38 @@
 		<input type='submit' value='Remove'>
 		{% endif %}
 	</form>
-</div>
-{% endif %}
+	{% endif %}
 
+	{% if g.in_collection %}
+	<form class="star-rating" method="POST">
+		<label> Rating </label>
+
+		{% for i in range(1, 6) %}
+		<label id="rating-{{ i }}"> 
+ 
+			{% if i <= g.game_rating %}
+			<span>  &starf; </span>
+			{% else %}
+			<span>  &star; </span>
+			{% endif %}
+			<input type="submit" name="rate" value="{{ i }}">
+		</label>
+		{% endfor %}
+	</form>
+
+	<form class="completion" method="POST">
+		<label> Completed </label>
+
+		<label>
+			{% if g.game_completed %}
+			<span>  &check; </span>
+			<input type="submit" name="completed" value="0">
+			{% else %}
+			<span>  &cross; </span>
+			<input type="submit" name="completed" value="1">
+			{% endif %}
+		</label>
+	</form>
+	{% endif %}
+</div>
 {% endblock %}

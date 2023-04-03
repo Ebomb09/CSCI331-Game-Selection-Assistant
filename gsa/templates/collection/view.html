@@ -10,6 +10,7 @@
 		<th> Game Image </th>
 		<th> Game Name </th>
 		<th> Play Time </th>
+		<th> Rating </th>
 		<th> Completed </th>
 	</tr>
 
@@ -19,6 +20,23 @@
 		<td> <a href="{{ url_for('game.view', gameId=item['gameId']) }}"> {{ item['name'] }} </a> </td>
 		<td> {{ item['playtime'] }} </td>
 
+		<!-- Rating Star View -->
+		{% if item['rating'] %}
+		<td>
+			{% for i in range(1, 6) %}
+
+				{% if i <= item['rating'] %}
+				&starf;
+				{% else %}
+				&star;
+				{% endif %}
+			{% endfor %}
+		</td>
+		{% else %}
+		<td> &star; &star; &star; &star; &star; </td>
+		{% endif %}
+
+		<!-- Completion Status -->
 		{% if item['completed'] %}
 		<td> &check; </td>
 		{% else %}

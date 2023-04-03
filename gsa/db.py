@@ -158,7 +158,7 @@ class Database:
 			).fetchall()
 
 
-	def remove_user_game(self, userId: int, gameId: str):
+	def remove_user_game(self, userId: int, gameId: int):
 		user = self.get_user(id=userId)
 		game = self.get_game(id=gameId)
 
@@ -171,7 +171,7 @@ class Database:
 			self.connection.commit()
 
 
-	def add_user_game(self, userId: int, gameId: str):
+	def add_user_game(self, userId: int, gameId: int):
 		user = self.get_user(id=userId)
 		game = self.get_game(id=gameId)
 
@@ -180,5 +180,31 @@ class Database:
 			self.connection.execute(
 				'INSERT INTO collection(userId, gameId, dateAdded) VALUES (?, ?, ?)',
 				[userId, gameId, time.time_ns()]
+				)
+			self.connection.commit()
+
+
+	def update_user_game_rating(self, userId: int, gameId: int, rating: int):
+		user = self.get_user(id=userId)
+		game = self.get_game(id=gameId)
+
+		# Try to update rating if valid
+		if game is not None and user is not None:
+			self.connection.execute(
+				'UPDATE collection SET rating=? WHERE userId=? AND gameId=?',
+				[rating, userId, gameId]
+				)
+			self.connection.commit()
+
+
+	def update_user_game_completion(self, userId: int, gameId: int, completion: int):
+		user = self.get_user(id=userId)
+		game = self.get_game(id=gameId)
+
+		# Try to update rating if valid
+		if game is not None and user is not None:
+			self.connection.execute(
+				'UPDATE collection SET completed=? WHERE userId=? AND gameId=?',
+				[completion, userId, gameId]
 				)
 			self.connection.commit()
