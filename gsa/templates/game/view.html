@@ -24,7 +24,7 @@
 
 	<section class="description">
 		<h2> Description: </h2>
-		<p> {{ g.game['description'] }} </p>
+		<p> {{ g.game_description }} </p>
 	</section>
 
 	<section class="time-to-beat">
@@ -40,50 +40,54 @@
 			<li> Platform {{ g.game['tag'] }} </li>
 		</ul>
 	</section>
-
-	{% if g.user != None %}
-	<form method="POST">
-
-		{% if not g.in_collection %}
-		<input type='hidden' name='do' value='add'>
-		<input type='submit' value='Add'>
-		{% else %}
-		<input type='hidden' name='do' value='remove'>
-		<input type='submit' value='Remove'>
-		{% endif %}
-	</form>
-	{% endif %}
-
-	{% if g.in_collection %}
-	<form class="star-rating" method="POST">
-		<label> Rating </label>
-
-		{% for i in range(1, 6) %}
-		<label id="rating-{{ i }}"> 
- 
-			{% if i <= g.game_rating %}
-			<span>  &starf; </span>
-			{% else %}
-			<span>  &star; </span>
-			{% endif %}
-			<input type="submit" name="rate" value="{{ i }}">
-		</label>
-		{% endfor %}
-	</form>
-
-	<form class="completion" method="POST">
-		<label> Completed </label>
-
-		<label>
-			{% if g.game_completed %}
-			<span>  &check; </span>
-			<input type="submit" name="completed" value="0">
-			{% else %}
-			<span>  &cross; </span>
-			<input type="submit" name="completed" value="1">
-			{% endif %}
-		</label>
-	</form>
-	{% endif %}
 </div>
+
+<hr>
+
+{% if g.user != None %}
+<form method="POST">
+	<label> Collection </label>
+
+	{% if not g.in_collection %}
+	<input type='hidden' name='do' value='add'>
+	<input type='submit' value='Add'>
+	{% else %}
+	<input type='hidden' name='do' value='remove'>
+	<input type='submit' value='Remove'>
+	{% endif %}
+</form>
+{% endif %}
+
+{% if g.in_collection %}
+<form class="star-rating" method="POST">
+	<label> Rating </label>
+
+	{% for i in range(1, 6) %}
+	<label id="rating-{{ i }}"> 
+
+		{% if i <= g.game_rating %}
+		<span>  &starf; </span>
+		{% else %}
+		<span>  &star; </span>
+		{% endif %}
+		<input type="submit" name="rate" value="{{ i }}">
+	</label>
+	{% endfor %}
+</form>
+
+<form class="completion" method="POST">
+	<label> Completed </label>
+
+	<label>
+		{% if g.game_completed %}
+		<span>  &check; </span>
+		<input type="submit" name="completed" value="0">
+		{% else %}
+		<span>  &cross; </span>
+		<input type="submit" name="completed" value="1">
+		{% endif %}
+	</label>
+</form>
+{% endif %}
+
 {% endblock %}

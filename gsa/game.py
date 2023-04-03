@@ -1,4 +1,6 @@
 from flask import Blueprint, request, session, render_template, g
+from bs4 import BeautifulSoup
+from requests import get
 
 from .db import get_db
 
@@ -10,6 +12,7 @@ def view(gameId):
 	db = get_db()
 
 	g.game = db.get_game(id=gameId)
+	g.game_description = get_description(gameId)
 	g.in_collection = False
 	g.game_rating = 0
 	g.game_completed = 0 
@@ -48,3 +51,21 @@ def view(gameId):
 				break
 
 	return render_template('game/view.html')
+
+
+def get_description(gameId):
+	result = get(f'https://howlongtobeat.com/game/{gameId}', headers={'User-Agent': 'GSA Application'})
+
+	# Parse using BeautifulSoup
+	soup = BeautifulSoup(result.text, 'html.parser')
+
+	# Get the description of the game
+	descriptorTag = soup.find('div', {'class': 'GameSummary_profile_info__e935c GameSummary_large__KEP5n'})
+
+	# Extract the read more tag if it is present
+	readMore = descriptorTag.find('span', {'id': 'profile_summary_more'})
+
+	if(readMore is not None):
+		readMore.extract()
+
+	return descriptorTag.text
