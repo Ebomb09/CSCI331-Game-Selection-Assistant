@@ -149,11 +149,17 @@ class Database:
 		return sql_result
 
 
-	def get_user_games(self, userId: int):
-		return self.connection.execute(
-			'SELECT * FROM collection JOIN game 	\
+	def get_user_games(self, userId: int, sort: str = None, order: str = None):
+
+		query = 'SELECT * FROM collection JOIN game 	\
 			ON collection.gameId=game.id			\
-			WHERE userId=?',
+			WHERE userId=? '
+
+		if sort is not None and order is not None:
+			query += f'ORDER BY {sort} {order}'
+
+		return self.connection.execute(
+			query,
 			[userId]
 			).fetchall()
 

@@ -8,10 +8,66 @@
 <table>
 	<tr>
 		<th> Game Image </th>
-		<th> Game Name </th>
-		<th> Play Time </th>
-		<th> Rating </th>
-		<th> Completed </th>
+
+		<th> 
+		{% if g.sort == 'name' %}
+			{% if g.order == 'ASC' %}
+			<a href='?sort={{ g.sort }}&order=DESC'> &darr;
+			{% else %}
+			<a href='?sort={{ g.sort }}&order=ASC'> &uarr;
+			{% endif %}
+		{% else %}
+		<a href='?sort=name&order=ASC'>
+		{% endif %}
+
+		Game Name 
+		</a>
+		</th>
+
+		<th> 
+		{% if g.sort == 'playtime' %}
+			{% if g.order == 'ASC' %}
+			<a href='?sort={{ g.sort }}&order=DESC'> &darr;
+			{% else %}
+			<a href='?sort={{ g.sort }}&order=ASC'> &uarr;
+			{% endif %}
+		{% else %}
+		<a href='?sort=playtime&order=ASC'>
+		{% endif %}
+
+		Play Time 
+		</a>
+		</th>
+
+		<th> 
+		{% if g.sort == 'rating' %}
+			{% if g.order == 'ASC' %}
+			<a href='?sort={{ g.sort }}&order=DESC'> &darr;
+			{% else %}
+			<a href='?sort={{ g.sort }}&order=ASC'> &uarr;
+			{% endif %}
+		{% else %}
+		<a href='?sort=rating&order=ASC'>
+		{% endif %}
+		
+		Rating 
+		</a>
+		</th>
+
+		<th> 
+		{% if g.sort == 'completed' %}
+			{% if g.order == 'ASC' %}
+			<a href='?sort={{ g.sort }}&order=DESC'> &darr;
+			{% else %}
+			<a href='?sort={{ g.sort }}&order=ASC'> &uarr;
+			{% endif %}
+		{% else %}
+		<a href='?sort=completed&order=ASC'>
+		{% endif %}
+		
+		Completed 
+		</a>
+		</th>
 	</tr>
 
 	{% for item in g.collection %}
