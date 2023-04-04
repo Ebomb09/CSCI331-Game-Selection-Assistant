@@ -19,12 +19,15 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- Game Details -->
+
 <div class="game">
 	<img class="box-art" src="{{ g.game['image_url'] }}" alt="{{ g.game['name'] }}'s box art">
 
 	<section class="description">
 		<h2> Description: </h2>
-		<p> {{ g.game_description }} </p>
+		<p> {{ g.game['description'] }} </p>
 	</section>
 
 	<section class="time-to-beat">
@@ -35,14 +38,16 @@
 	<section class="tags">
 		<h2> Tags: </h2>
 		<ul>
-			<li> Action {{ g.game['tag'] }} </li>
-			<li> Adventure {{ g.game['tag'] }} </li>
-			<li> Platform {{ g.game['tag'] }} </li>
+			{% for tag in g.game['tags'].split(',') %}
+			<li> {{ tag }} </li>
+			{% endfor %}
 		</ul>
 	</section>
 </div>
 
 <hr>
+
+<!-- Add / Remove to collection-->
 
 {% if g.user != None %}
 <form method="POST">
@@ -57,6 +62,8 @@
 	{% endif %}
 </form>
 {% endif %}
+
+<!-- Edit the collection meta data -->
 
 {% if g.in_collection %}
 <form class="star-rating" method="POST">

@@ -3,6 +3,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import click
 from flask import current_app, g
 from howlongtobeatpy import HowLongToBeat
+from bs4 import BeautifulSoup
+from requests import get
 import time
 
 
@@ -90,6 +92,8 @@ class Database:
 
 	def get_game(self, name: str = None, id: int = None):
 
+		result = None
+
 		# Search our database by id
 		if id is not None:
 
@@ -132,11 +136,12 @@ class Database:
 				result = max(results, key=lambda r: r.similarity)
 
 		if result is not None:
+			description, tags = self.get_meta(result.game_id)
 
 			# Try inserting the HowLongToBeat game
 			self.connection.execute (
-				'INSERT INTO game(id, name, image_url, playtime) VALUES(?, ?, ?, ?)',
-				[result.game_id, result.game_name, result.game_image_url, result.all_styles]
+				'INSERT INTO game(id, name, description, tags, image_url, playtime) VALUES(?, ?, ?, ?, ?, ?)',
+				[result.game_id, result.game_name, description, tags, result.game_image_url, result.all_styles]
 				)
 			self.connection.commit()
 
@@ -214,3 +219,41 @@ class Database:
 				[completion, userId, gameId]
 				)
 			self.connection.commit()
+
+
+	def get_meta(self, gameId: int):
+		"""
+		Scrape Howlongtobeat to get the description and 
+		tags of a selected gameId
+		"""
+
+		result = get(f'https://howlongtobeat.com/game/{gameId}', headers={'User-Agent': 'GSA Application'})
+
+		# Parse using BeautifulSoup
+		soup = BeautifulSoup(result.text, 'html.parser')
+
+		# Get the description of the game
+		descriptorTag = soup.find('div', {'class': 'GameSummary_profile_info__e935c GameSummary_large__KEP5n'})
+
+		if descriptorTag is not None:
+
+			# Extract the read more tag if it is present
+			readMore = descriptorTag.find('span', {'id': 'profile_summary_more'})
+
+			if(readMore is not None):
+				readMore.extract()
+
+			description = descriptorTag.text
+
+		# Get the genre of the game
+		metaTag = soup.find_all('div', {'class': 'GameSummary_profile_info__e935c GameSummary_medium__5cP8Y'})
+		genres = ""
+
+		for tag in metaTag:
+			head = tag.find('strong')
+
+			if head is not None and head.text == 'Genres:':
+				head.extract()
+				genres = tag.text
+
+		return [description, genres]

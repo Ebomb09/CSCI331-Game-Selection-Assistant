@@ -14,6 +14,8 @@ CREATE TABLE user (
 CREATE TABLE game (
 	id			INTEGER UNIQUE NOT NULL,
 	name 		TEXT NOT NULL,
+	description TEXT,
+	tags		TEXT,
 	image_url,	TEXT,
 	playtime	REAL,
 
