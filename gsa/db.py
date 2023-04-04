@@ -246,13 +246,13 @@ class Database:
 			description = descriptorTag.text
 
 		# Get the genre of the game
-		metaTag = soup.find_all('div', {'class': 'GameSummary_profile_info__e935c GameSummary_medium__5cP8Y'})
+		metaTags = soup.find_all('div', {'class': 'GameSummary_profile_info__e935c GameSummary_medium__5cP8Y'})
 		genres = ""
 
-		for tag in metaTag:
+		for tag in metaTags:
 			head = tag.find('strong')
 
-			if head is not None and head.text == 'Genres:':
+			if head is not None and (head.text == 'Genres:' or head.text == 'Genre:'):
 				head.extract()
 				genres = tag.text
 
