@@ -22,6 +22,7 @@
 	    <ul>
 	        {% if g.user %}
 	            <li> <a href="{{ url_for('collection.view') }}" > Home </a> </li>
+	           	<li> <a href="{{ url_for('recommend.view') }}" > Recommend </a> </li>
 	            <li> <a href="{{ url_for('auth.account') }}" > {{ g.user['name'] }} </a> </li>
 	            <li> <a href="{{ url_for('auth.logout') }}"> Log Out </a> </li>
 	        {% else %}

@@ -25,6 +25,9 @@ def create_app(test_config=None):
 	from . import search
 	app.register_blueprint(search.bp)
 
+	from . import recommend
+	app.register_blueprint(recommend.bp)
+
 	from . import collection
 	app.register_blueprint(collection.bp)
 
