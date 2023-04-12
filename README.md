@@ -16,7 +16,6 @@ pip install -r requirements.txt
 4. Initialize gsa
 ```
 flask --app gsa init-db
-
 ```
 
 ## Usage
